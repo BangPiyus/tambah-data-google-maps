@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading JSON File into HTML Table</title>
+    <!-- Load SheetJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+</head>
+<body>
+    <h1>Data from hasil.json</h1>
+    <table id="data-table" border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table body will be populated by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        // Function to fetch data from JSON file
+        function fetchData() {
+            fetch('hasil.json')
+            .then(response => response.json())
+            .then(data => {
+                // Populate table body with JSON data
+                const tableBody = document.querySelector('#data-table tbody');
+                data.forEach(rowData => {
+                    const row = document.createElement('tr');
+                    Object.values(rowData).forEach(value => {
+                        const cell = document.createElement('td');
+                        cell.textContent = value;
+                        row.appendChild(cell);
+                    });
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Call fetchData function when the page loads
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
