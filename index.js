@@ -105,15 +105,16 @@ async function getGoogleMapsData() {
         });
 
         console.log(business);
-        return business;
+
+        const jsonData = JSON.stringify(business);
 
 
-        const filePath = 'hasil.txt';
+        const filePath = 'hasil.json';
 
         // Menyimpan variabel ke dalam file
         async function saveDataToFile() {
             try {
-                await writeFile(filePath, business);
+                await writeFile(filePath, jsonData);
                 console.log('Data berhasil disimpan dalam file.');
             } catch (err) {
                 console.error('Terjadi kesalahan saat menyimpan data:', err);
@@ -123,12 +124,18 @@ async function getGoogleMapsData() {
         // Memanggil fungsi untuk menyimpan data ke dalam file
         saveDataToFile();
 
+        return business;
+
+        
+
 
         
     } catch (error) {
         console.log("Something went wrong!");
     } finally {
         await browser.close();
+
+
     };
 }
 
