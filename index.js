@@ -1,9 +1,13 @@
 import * as cheerio from "cheerio";
+import fs from 'fs';
 import { writeFile } from 'fs/promises';
 
 
 // Puppeteer with Plugin Functionality
 import puppeteerExtra from "puppeteer-extra";
+
+// Baca isi file kota.txt secara sinkronus
+const kotaData = fs.readFileSync('kota.txt', 'utf8').split('\n')[0].trim();
 
 // Puppeteer Plugin to prevent detection
 import stealthPlugin from "puppeteer-extra-plugin-stealth";
@@ -16,7 +20,7 @@ async function getGoogleMapsData() {
     // Launch browser
     const browser = await puppeteerExtra.launch({ headless: false }); // headless false to show the window
     const page = await browser.newPage();
-    const query = "laundry di surabaya";
+    const query = kotaData;
 
     try {
   
@@ -99,14 +103,12 @@ async function getGoogleMapsData() {
                 category: firstOfLast?.text()?.split("·")?.[0]?.trim(),
                 address: firstOfLast?.text()?.split("·")?.[1]?.trim(),
                 phone: lastOfLast?.text()?.split("·")?.[1]?.trim(),
-                googleUrl,
-                ratingText,
             });
         });
 
         console.log(business);
 
-        const jsonData = JSON.stringify(business);
+        // const jsonData = JSON.stringify(business);
 
 
         const filePath = 'hasil.json';
@@ -114,7 +116,7 @@ async function getGoogleMapsData() {
         // Menyimpan variabel ke dalam file
         async function saveDataToFile() {
             try {
-                await writeFile(filePath, jsonData);
+                await writeFile(filePath, business);
                 console.log('Data berhasil disimpan dalam file.');
             } catch (err) {
                 console.error('Terjadi kesalahan saat menyimpan data:', err);
