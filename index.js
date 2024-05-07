@@ -108,7 +108,7 @@ async function getGoogleMapsData() {
 
         console.log(business);
 
-        // const jsonData = JSON.stringify(business);
+        const jsonData = JSON.stringify(business);
 
 
         const filePath = 'hasil.json';
@@ -116,7 +116,7 @@ async function getGoogleMapsData() {
         // Menyimpan variabel ke dalam file
         async function saveDataToFile() {
             try {
-                await writeFile(filePath, business);
+                await writeFile(filePath, jsonData);
                 console.log('Data berhasil disimpan dalam file.');
             } catch (err) {
                 console.error('Terjadi kesalahan saat menyimpan data:', err);

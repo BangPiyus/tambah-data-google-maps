@@ -102,7 +102,7 @@ function angkasaja($data){
             }
     ?>
     <label class="form-label">Hasil</label>
-    <textarea class="form-control"><?= $datanya; ?></textarea>
+    <textarea class="form-control" rows="20"><?= $datanya; ?></textarea>
     <?php
 
         }
